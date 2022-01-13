@@ -2,11 +2,73 @@
 //
 
 #include <iostream>
+#include "physics.h"
+#include "spacecraft.h"
 using namespace std;
+
+
+
+float get_vertical_velocity() {
+    // Get vertical velocity value from user
+    float vert_vel;
+    cout << "What is your vertical velocity (m/s)? ";
+    // Got help on how to validate input in c++ here: https://www.youtube.com/watch?v=YIX7UhIKEIk&t=378s&ab_channel=profgustin
+    while (!(cin >> vert_vel)) {
+        cout << "Must enter a number: ";
+        cin.clear();
+        cin.ignore(10, '\n');
+    }
+    return vert_vel;
+}
+
+float get_horizontal_velocity() {
+    // Get horizontal velocity value from user
+    float horz_vel;
+    cout << "What is your horizontal velocity (m/s)? ";
+    while (!(cin >> horz_vel)) {
+        cout << "Must enter a number: ";
+        cin.clear();
+        cin.ignore(10, '\n');
+    }
+    return horz_vel;
+}
+
+float get_altitude() {
+    // Get altitude value from user
+    float altitude;
+    cout << "What is your altitude (m)? ";
+    while (!(cin >> altitude)) {
+        cout << "Must enter a number: ";
+        cin.clear();
+        cin.ignore(10, '\n');
+    }
+    return altitude;
+}
+
+float get_angle() {
+    // Get altitude value from user
+    float angle;
+    cout << "What is your angle (m)? ";
+    while (!(cin >> angle)) {
+        cout << "Must enter a number: ";
+        cin.clear();
+        cin.ignore(10, '\n');
+    }
+    return angle;
+}
 
 int main()
 {
-    cout << "Hello World!\n";
+    // Initalize physics and spacecraft objects
+    Physics p;
+    Spacecraft lm;
+    
+    // Get initial inputs
+    lm.setVertVelocity(get_vertical_velocity());
+    lm.setHorVelocity(get_horizontal_velocity());
+    lm.setVertPosition(get_altitude());
+    lm.setAngle(get_angle());
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
