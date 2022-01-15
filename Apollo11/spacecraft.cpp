@@ -55,3 +55,12 @@ double Spacecraft::getMass()
 	return mass;
 }
 
+double Spacecraft::getThrust()
+{
+	return thrust;
+}
+
+double Spacecraft::getAcceleration()
+{
+	return acceleration;
+}

@@ -12,6 +12,7 @@ public:
 	{
 		mass = 15103;
 		thrust = 45000;
+		acceleration = thrust / mass;
 	}
 
 	// Getters
@@ -21,6 +22,8 @@ public:
 	double getHorVelocity();
 	double getAngle();
 	double getMass();
+	double getThrust();
+	double getAcceleration();
 
 	// Setters
 	void setVertPosition(double postion);
@@ -35,6 +38,7 @@ private:
 	double position[2];
 	double velocity[2];
 	double angle;
+	double acceleration;
 
 };
 
