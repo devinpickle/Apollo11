@@ -3,7 +3,9 @@
 using namespace std;
 
 
-// Setters
+/****************************************************************************************
+* Setters: All the set functions store the desired value
+****************************************************************************************/
 void Spacecraft::setVertPosition(double position)
 {
 	this->position[1] = position;
@@ -29,27 +31,39 @@ void Spacecraft::setHorVelocity(double velocity)
 	this->velocity[0] = velocity;
 }
 
-// Getters
+void Spacecraft::setSpeed(double speed)
+{
+	this->speed = speed;
+}
+
+/****************************************************************************************
+* Getters: All the get funcitons return the desired value
+****************************************************************************************/
 double Spacecraft::getVertPosition()
 {
 	return position[1];
 }
+
 double Spacecraft::getHorPosition()
 {
 	return position[0];
 }
+
 double Spacecraft::getVertVelocity()
 {
 	return velocity[1];
 }
+
 double Spacecraft::getHorVelocity()
 {
 	return velocity[0];
 }
+
 double Spacecraft::getAngle()
 {
 	return angle;
 }
+
 double Spacecraft::getMass()
 {
 	return mass;
@@ -58,6 +72,11 @@ double Spacecraft::getMass()
 double Spacecraft::getThrust()
 {
 	return thrust;
+}
+
+double Spacecraft::getSpeed()
+{
+	return speed;
 }
 
 double Spacecraft::getAcceleration()

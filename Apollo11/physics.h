@@ -19,7 +19,7 @@ public:
 	double computeVelocity(double initialVelocity, double time, double acceleration);
 	double computePosition(double initialPosition, double initialVelocity, double acceleration, double time);
 	double computeVectorComponent(double vectorMagnitude, double angle);
-	double computeSpeed(float vertVel, float horVel);
+	double computeSpeed(double vertVel, double horVel);
 
 
 private:

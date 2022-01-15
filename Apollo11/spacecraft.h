@@ -23,6 +23,7 @@ public:
 	double getAngle();
 	double getMass();
 	double getThrust();
+	double getSpeed();
 	double getAcceleration();
 
 	// Setters
@@ -31,10 +32,12 @@ public:
 	void setVertVelocity(double velocity);
 	void setHorVelocity(double velocity);
 	void setAngle(double angle);
+	void setSpeed(double speed);
 
 private:
 	double mass;
 	double thrust;
+	double speed;
 	double position[2];
 	double velocity[2];
 	double angle;
