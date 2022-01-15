@@ -5,11 +5,24 @@ using namespace std;
 
 
 /****************************************************************************************
-* Returns the Gravity variable
+* Getters: returns the desired variable
 ****************************************************************************************/
 double Physics::getGravity()
 {
 	return this->gravity;
+}
+
+double Physics::getRadians()
+{
+	return this->radians;
+}
+
+/****************************************************************************************
+* Stores the radian variable
+****************************************************************************************/
+void Physics::setRadians(double radians)
+{
+	this->radians = radians;
 }
 
 /****************************************************************************************

@@ -89,7 +89,8 @@ int main()
     lm.setHorVelocity(get_horizontal_velocity());
     lm.setVertPosition(get_altitude());
     lm.setHorPosition(0.0);
-    lm.setAngle(p.computeRadians(get_angle("What is your angle where vertical is 0 (degrees)? ")));
+    lm.setAngle(get_angle("What is your angle where vertical is 0 (degrees)? "));
+    p.setRadians(p.computeRadians(lm.getAngle()));
 
     cout << endl;
 
@@ -106,27 +107,27 @@ int main()
         {
             lm.setVertVelocity(p.computeVelocity(
                 lm.getVertVelocity(), // The lunar module's initial vertical velocity
-                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), lm.getAngle()), 
+                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
                 // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
                 1)); // One second of time elapsed
 
             lm.setHorVelocity(p.computeVelocity(
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - lm.getAngle()), 
+                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()), 
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
             lm.setVertPosition(p.computePosition(
                 lm.getVertPosition(), // The lunar module's initial vertical position
                 lm.getVertVelocity(), // The lunar module's initial vertical velocity
-                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), lm.getAngle()), 
+                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
                 // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
                 1)); // One second of time elapsed
 
             lm.setHorPosition(p.computePosition(
                 lm.getHorPosition(), // The lunar module's initial horizontal position
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - lm.getAngle()), 
+                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()),
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
@@ -142,7 +143,9 @@ int main()
             landed = true;
         }
         else {
-            lm.setAngle(p.computeRadians(get_angle("\nWhat is your new angle (degrees)? ")));
+            lm.setAngle(get_angle("\nWhat is your new angle (degrees)? "));
+            p.setRadians(p.computeRadians(lm.getAngle()));
+
             cout << endl;
         }
     } while (!landed);

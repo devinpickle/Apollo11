@@ -10,9 +10,12 @@ public:
 	// Constants
 	double TAU = 6.2831853071796; // The circle constant
 
-
 	// Getters
 	double getGravity();
+	double getRadians();
+
+	// Setters
+	void setRadians(double radians);
 
 	// Compute functions
 	double computeRadians(double degree);
