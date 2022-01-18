@@ -12,7 +12,8 @@ using namespace std;
 /****************************************************************************************
 * Prompts the user for the starting Vertical Velocity
 ****************************************************************************************/
-float get_vertical_velocity() {
+float getVerticalVelocity() 
+{
     // Get vertical velocity value from user
     float vert_vel;
     cout << "What is your vertical velocity where upwards is positive (m/s)? ";
@@ -28,7 +29,8 @@ float get_vertical_velocity() {
 /****************************************************************************************
 * Prompts the user for the starting horizontal Velocity
 ****************************************************************************************/
-float get_horizontal_velocity() {
+float getHorizontalVelocity() 
+{
     // Get horizontal velocity value from user
     float horz_vel;
     cout << "What is your horizontal velocity (m/s)? ";
@@ -43,7 +45,8 @@ float get_horizontal_velocity() {
 /****************************************************************************************
 * Prompts the user for the starting altitude/height/y value
 ****************************************************************************************/
-float get_altitude() {
+float getAltitude() 
+{
     // Get altitude value from user
     float altitude;
     cout << "What is your altitude (m)? ";
@@ -58,7 +61,8 @@ float get_altitude() {
 /****************************************************************************************
 * Prompts the user for the starting angle
 ****************************************************************************************/
-float get_angle(string prompt) {
+float getAngle(string prompt) 
+{
     // Get altitude value from user
     float angle;
     cout << prompt;
@@ -85,11 +89,11 @@ int main()
     Spacecraft lm;
     
     // Get initial inputs
-    lm.setVertVelocity(get_vertical_velocity());
-    lm.setHorVelocity(get_horizontal_velocity());
-    lm.setVertPosition(get_altitude());
+    lm.setVertVelocity(getVerticalVelocity());
+    lm.setHorVelocity(getHorizontalVelocity());
+    lm.setVertPosition(getAltitude());
     lm.setHorPosition(0.0);
-    lm.setAngle(get_angle("What is your angle where vertical is 0 (degrees)? "));
+    lm.setAngle(getAngle("What is your angle where vertical is 0 (degrees)? "));
     p.setRadians(p.computeRadians(lm.getAngle()));
 
     cout << endl;
@@ -97,7 +101,8 @@ int main()
     bool landed = false;
     int count = 1;
 
-    do {
+    do 
+    {
     
     // Simulate one second of action
     // Five times
@@ -113,7 +118,7 @@ int main()
 
             lm.setHorVelocity(p.computeVelocity(
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()), 
+                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()), 
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
@@ -127,7 +132,7 @@ int main()
             lm.setHorPosition(p.computePosition(
                 lm.getHorPosition(), // The lunar module's initial horizontal position
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()),
+                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()),
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
@@ -139,11 +144,13 @@ int main()
             count++;
             
         }
-        if (lm.getVertPosition() <= 0) {
+        if (lm.getVertPosition() <= 0) 
+        {
             landed = true;
         }
-        else {
-            lm.setAngle(get_angle("\nWhat is your new angle (degrees)? "));
+        else 
+        {
+            lm.setAngle(getAngle("\nWhat is your new angle (degrees)? "));
             p.setRadians(p.computeRadians(lm.getAngle()));
 
             cout << endl;

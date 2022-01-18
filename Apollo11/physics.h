@@ -8,7 +8,7 @@ class Physics
 public:
 	
 	// Constants
-	double TAU = 6.2831853071796; // The circle constant
+	double const circleConst = 6.2831853071796; // The circle constant
 
 	// Getters
 	double getGravity();
@@ -16,6 +16,9 @@ public:
 
 	// Setters
 	void setRadians(double radians);
+
+	// Constructor
+	Physics();
 
 	// Compute functions
 	double computeRadians(double degree);
@@ -26,7 +29,7 @@ public:
 
 
 private:
-	double gravity = -1.625;
+	const double gravity = -1.625;
 	double radians;
 
 };
