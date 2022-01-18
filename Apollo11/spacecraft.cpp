@@ -37,7 +37,7 @@ void Spacecraft::setSpeed(double speed)
 }
 
 /****************************************************************************************
-* Getters: All the get funcitons return the desired value
+* Getters: All the get functions return the desired value
 ****************************************************************************************/
 double Spacecraft::getVertPosition()
 {
