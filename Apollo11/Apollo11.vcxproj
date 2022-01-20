@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="Apollo11.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="spacecraft.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physics.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="spacecraft.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
