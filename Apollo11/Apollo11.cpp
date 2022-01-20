@@ -267,7 +267,8 @@ int main()
             
             
         }
-        if (lm.getVertPosition() <= 0 || count > 9) {
+        if (lm.getVertPosition() <= 0 || count > 9) 
+        {
             landed = true;
             if (lm.getSpeed() > 4.0) {
                 cout << endl << "Rough landing!" << endl;
