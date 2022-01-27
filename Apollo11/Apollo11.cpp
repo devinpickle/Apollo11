@@ -191,103 +191,103 @@ void driver(double vv, double hv, double vp, double ang)
 /****************************************************************************************
 * Main runs the main looopand calls all necessary functions and classes
 ****************************************************************************************/
-int main()
-{
-    // Test Cases
-    /*cout << "Test case: Hard landing" << endl;
-    driver(-13.959, 10.53, 100.0, -45);
-    cout << endl << endl << "Test case: Crash" << endl;
-    driver(-15.000, -35.00, 207.77, 90);
-    cout << endl << endl << "Test case: Armstrong is awesome" << endl;
-    driver(-10.000, 10.000, 56.11, -42.185);*/
-    
-    // sets the format for the numbers displayed
-    cout.setf(ios::fixed);
-    cout.setf(ios::showpoint);
-    cout.precision(2);
-
-    // Initalize physics and spacecraft objects
-    Physics p;
-    Spacecraft lm;
-    
-    // Get initial inputs
-    lm.setVertVelocity(getVerticalVelocity());
-    lm.setHorVelocity(getHorizontalVelocity());
-    lm.setVertPosition(getAltitude());
-    lm.setHorPosition(0.0);
-    lm.setAngle(getAngle("What is your angle where vertical is 0 (degrees)? "));
-    p.setRadians(p.computeRadians(lm.getAngle()));
-
-    cout << endl;
-
-    bool landed = false;
-    int count = 1;
-
-    do 
-    {
-    
-    // Simulate one second of action
-    // Five times
-        cout << "For the next 5 seconds with the main engine on, the position of the lander is:\n\n";
-
-        for (int i = 0; i < 5 && lm.getVertVelocity() <= 0; i++)
-        {
-           lm.setVertVelocity(p.computeVelocity(
-                lm.getVertVelocity(), // The lunar module's initial vertical velocity
-                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
-                // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
-                1)); // One second of time elapsed
-
-            lm.setHorVelocity(p.computeVelocity(
-                lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()), 
-                // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
-                1)); // One second of time elapsed
-
-            lm.setVertPosition(p.computePosition(
-                lm.getVertPosition(), // The lunar module's initial vertical position
-                lm.getVertVelocity(), // The lunar module's initial vertical velocity
-                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
-                // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
-                1)); // One second of time elapsed
-
-            lm.setHorPosition(p.computePosition(
-                lm.getHorPosition(), // The lunar module's initial horizontal position
-                lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()),
-                // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
-                1)); // One second of time elapsed
-
-            lm.setSpeed(p.computeSpeed(lm.getVertVelocity(), lm.getHorVelocity()));
-            
-            cout << setw(2) << count << right << "s | (x,y): (" << lm.getHorPosition() << ", " << lm.getVertPosition() << ")  " << "(dx,dy): (" 
-                << lm.getHorVelocity() << ", " << lm.getVertVelocity() << ")  speed:" << lm.getSpeed() << "m/s  angle:" << lm.getAngle() << "deg" << endl;
-
-            count++;
-            
-            
-        }
-        if (lm.getVertPosition() <= 0 || count > 9) 
-        {
-            landed = true;
-            if (lm.getSpeed() > 4.0) {
-                cout << endl << "Rough landing!" << endl;
-            }
-            else {
-                cout << endl << "The eagle has landed!" << endl;
-            }
-            break;
-        }
-        else 
-        {
-            lm.setAngle(getAngle("\nWhat is your new angle (degrees)? "));
-            p.setRadians(p.computeRadians(lm.getAngle()));
-
-            cout << endl;
-        }
-    } while (!landed);
-
-}
+//int main()
+//{
+//    // Test Cases
+//    /*cout << "Test case: Hard landing" << endl;
+//    driver(-13.959, 10.53, 100.0, -45);
+//    cout << endl << endl << "Test case: Crash" << endl;
+//    driver(-15.000, -35.00, 207.77, 90);
+//    cout << endl << endl << "Test case: Armstrong is awesome" << endl;
+//    driver(-10.000, 10.000, 56.11, -42.185);*/
+//    
+//    // sets the format for the numbers displayed
+//    cout.setf(ios::fixed);
+//    cout.setf(ios::showpoint);
+//    cout.precision(2);
+//
+//    // Initalize physics and spacecraft objects
+//    Physics p;
+//    Spacecraft lm;
+//    
+//    // Get initial inputs
+//    lm.setVertVelocity(getVerticalVelocity());
+//    lm.setHorVelocity(getHorizontalVelocity());
+//    lm.setVertPosition(getAltitude());
+//    lm.setHorPosition(0.0);
+//    lm.setAngle(getAngle("What is your angle where vertical is 0 (degrees)? "));
+//    p.setRadians(p.computeRadians(lm.getAngle()));
+//
+//    cout << endl;
+//
+//    bool landed = false;
+//    int count = 1;
+//
+//    do 
+//    {
+//    
+//    // Simulate one second of action
+//    // Five times
+//        cout << "For the next 5 seconds with the main engine on, the position of the lander is:\n\n";
+//
+//        for (int i = 0; i < 5 && lm.getVertVelocity() <= 0; i++)
+//        {
+//           lm.setVertVelocity(p.computeVelocity(
+//                lm.getVertVelocity(), // The lunar module's initial vertical velocity
+//                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
+//                // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
+//                1)); // One second of time elapsed
+//
+//            lm.setHorVelocity(p.computeVelocity(
+//                lm.getHorVelocity(), // The lunar module's initial horizontal velocity
+//                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()), 
+//                // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
+//                1)); // One second of time elapsed
+//
+//            lm.setVertPosition(p.computePosition(
+//                lm.getVertPosition(), // The lunar module's initial vertical position
+//                lm.getVertVelocity(), // The lunar module's initial vertical velocity
+//                p.getGravity() + p.computeVectorComponent(lm.getAcceleration(), p.getRadians()),
+//                // The lunar module's vertical acceleration (acceleration due to gravity, plus vertical acceleration from the engines)
+//                1)); // One second of time elapsed
+//
+//            lm.setHorPosition(p.computePosition(
+//                lm.getHorPosition(), // The lunar module's initial horizontal position
+//                lm.getHorVelocity(), // The lunar module's initial horizontal velocity
+//                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()),
+//                // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
+//                1)); // One second of time elapsed
+//
+//            lm.setSpeed(p.computeSpeed(lm.getVertVelocity(), lm.getHorVelocity()));
+//            
+//            cout << setw(2) << count << right << "s | (x,y): (" << lm.getHorPosition() << ", " << lm.getVertPosition() << ")  " << "(dx,dy): (" 
+//                << lm.getHorVelocity() << ", " << lm.getVertVelocity() << ")  speed:" << lm.getSpeed() << "m/s  angle:" << lm.getAngle() << "deg" << endl;
+//
+//            count++;
+//            
+//            
+//        }
+//        if (lm.getVertPosition() <= 0 || count > 9) 
+//        {
+//            landed = true;
+//            if (lm.getSpeed() > 4.0) {
+//                cout << endl << "Rough landing!" << endl;
+//            }
+//            else {
+//                cout << endl << "The eagle has landed!" << endl;
+//            }
+//            break;
+//        }
+//        else 
+//        {
+//            lm.setAngle(getAngle("\nWhat is your new angle (degrees)? "));
+//            p.setRadians(p.computeRadians(lm.getAngle()));
+//
+//            cout << endl;
+//        }
+//    } while (!landed);
+//
+//}
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
