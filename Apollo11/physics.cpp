@@ -5,56 +5,25 @@ using namespace std;
 
 
 
-Physics::Physics()
-{
-	// gravity = -1.625;
-}
-
-/****************************************************************************************
-* Getters: returns the desired variable
-****************************************************************************************/
-double Physics::getGravity()
-{
-	return this->gravity;
-}
-
-double Physics::getRadians()
-{
-	return this->radians;
-}
-
-/****************************************************************************************
-* Stores the radian variable
-****************************************************************************************/
-void Physics::setRadians(double radians)
-{
-	this->radians = radians;
-}
 
 /****************************************************************************************
 * Compute functions
 ****************************************************************************************/
-double Physics::computeRadians(double degree)
+
+/****************************************************************************************
+* This function calcluated the change in Velocity
+****************************************************************************************/
+double Physics::deltaVelocity(double acceleration, double time)
 {
-	return (degree / 360.0) * circleConst;
+	return acceleration * time; // The change in velocity during the time interval
 }
 
 /****************************************************************************************
-* This function calcluated the Velocity
+* This function computes thecahnge in the object's position
 ****************************************************************************************/
-double Physics::computeVelocity(double initialVelocity, double acceleration, double time)
+double Physics::deltaPosition(double initialVelocity, double acceleration, double time)
 {
-	return initialVelocity //The velocity at the beginning of the time interval
-		+ (acceleration * time); //The change in velocity during the time interval
-}
-
-/****************************************************************************************
-* This function computes the new postion of the object
-****************************************************************************************/
-double Physics::computePosition(double initialPosition, double initialVelocity, double acceleration, double time)
-{
-	return initialPosition // The position at the beginning of the time interval
-		+ (initialVelocity * time) + (0.5 * acceleration * (time * time)); // The change in position during the time interval
+	return (initialVelocity * time) + (0.5 * acceleration * (time * time)); // The change in position during the time interval
 }
 
 /****************************************************************************************
@@ -67,9 +36,9 @@ double Physics::computeVectorComponent(double vectorMagnitude, double angle)
 }
 
 /****************************************************************************************
-* Compute total speed from horizontal and vertical components
+* Compute a vector's magnitude from horizontal and vertical components
 ****************************************************************************************/
-double Physics::computeSpeed(double vertVelocity, double horVelocity)
+double Physics::computeVectorMagnitude(double vertComponent, double horComponent)
 {
-	return sqrt((vertVelocity * vertVelocity) + (horVelocity * horVelocity));
+	return sqrt((vertComponent * vertComponent) + (horComponent * horComponent));
 }

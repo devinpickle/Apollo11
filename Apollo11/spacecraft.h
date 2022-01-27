@@ -12,27 +12,32 @@
 #ifndef spacecraft_h // prevents the header from being imported multiple times
 #define spacecraft_h
 
+#include "Point.h"
+#include "physics.h"
+
 class Spacecraft
 {
+
+private:
+	Point position;
+	Point velocity;
+	double angle;
+	double acceleration;
+	double fuel;
+	enum FlightStatus { flying, landed, crashed };
+	FlightStatus status;
+	Physics p;
+
 public:
 	// Constructor
-	Spacecraft()
-	{
-		mass = 15103;
-		thrust = 45000;
-		acceleration = thrust / mass;
-	}
+	Spacecraft();
 
 	// Getters
-	double getVertPosition();
-	double getHorPosition();
-	double getVertVelocity();
-	double getHorVelocity();
+	Point getPosition();
+	Point getVelocity();
 	double getAngle();
-	double getMass();
-	double getThrust();
-	double getSpeed();
 	double getAcceleration();
+	double getFuel();
 
 	// Setters
 	void setVertPosition(double postion);
@@ -40,16 +45,17 @@ public:
 	void setVertVelocity(double velocity);
 	void setHorVelocity(double velocity);
 	void setAngle(double angle);
-	void setSpeed(double speed);
+	
+	void updateVertPosition(bool mainThrust);
+	void updateHorPosition(bool mainThrust);
+	void updateAngle(bool leftThrust, bool rightThrust);
+	void updateVertVelocity(bool mainThrust);
+	void updateHorVelocity(bool mainThrust);
+	void updateFuel(bool mainThrust);
+	void updateStatus(FlightStatus stat);
 
-private:
-	double mass;
-	double thrust;
-	double speed;
-	double position[2];
-	double velocity[2];
-	double angle;
-	double acceleration;
+
+
 
 };
 

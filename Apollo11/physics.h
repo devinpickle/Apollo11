@@ -13,33 +13,28 @@
 
 class Physics
 {
-public:
 	
+private:
 	// Constants
-	double const circleConst = 6.2831853071796; // The circle constant
+	const double gravity = -1.625;
+	const double circleConst = 6.2831853071796; // The circle constant
+	const double timestep = 0.033333333333333333; // The length of one frame of the game's display
 
-	// Getters
-	double getGravity();
-	double getRadians();
 
-	// Setters
-	void setRadians(double radians);
-
+public:
 	// Constructor
 	Physics();
 
+	// Getters
+	inline double getGravity() { return this->gravity; }
+	inline double getTimestep() { return this->timestep; }
+	inline double getCircleConst() { return this->circleConst; }
+
 	// Compute functions
-	double computeRadians(double degree);
-	double computeVelocity(double initialVelocity, double time, double acceleration);
-	double computePosition(double initialPosition, double initialVelocity, double acceleration, double time);
+	double deltaVelocity(double time, double acceleration);
+	double deltaPosition(double initialVelocity, double acceleration, double time);
 	double computeVectorComponent(double vectorMagnitude, double angle);
-	double computeSpeed(double vertVel, double horVel);
-
-
-private:
-	const double gravity = -1.625;
-	double radians;
-
+	double computeVectorMagnitude(double vertComponent, double horComponent);
 };
 
 #endif

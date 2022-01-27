@@ -1,62 +1,60 @@
 #include "spacecraft.h"
+#include "physics.h"
 #include <iostream>
 using namespace std;
+
+
+Spacecraft::Spacecraft()
+{
+	acceleration = 15103 / 45000;
+	fuel = 3000;
+	status = flying;
+	Physics p;
+
+	angle = 0;
+}
 
 
 /****************************************************************************************
 * Setters: All the set functions store the desired value
 ****************************************************************************************/
-void Spacecraft::setVertPosition(double position)
+void Spacecraft::setVertPosition(double pos)
 {
-	this->position[1] = position;
+	this->position.setY(pos);
 }
 
-void Spacecraft::setHorPosition(double position)
+void Spacecraft::setHorPosition(double pos)
 {
-	this->position[0] = position;
+	this->position.setX(pos);
 }
 
-void Spacecraft::setAngle(double angle)
+void Spacecraft::setAngle(double ang)
 {
-	this->angle = angle;
+	this->angle = ang;
 }
 
-void Spacecraft::setVertVelocity(double velocity)
+void Spacecraft::setVertVelocity(double vel)
 {
-	this->velocity[1] = velocity;
+	this->velocity.setY(vel);
 }
 
-void Spacecraft::setHorVelocity(double velocity)
+void Spacecraft::setHorVelocity(double vel)
 {
-	this->velocity[0] = velocity;
+	this->velocity.setX(vel);
 }
 
-void Spacecraft::setSpeed(double speed)
-{
-	this->speed = speed;
-}
 
 /****************************************************************************************
 * Getters: All the get functions return the desired value
 ****************************************************************************************/
-double Spacecraft::getVertPosition()
+Point Spacecraft::getPosition()
 {
-	return position[1];
+	return position;
 }
 
-double Spacecraft::getHorPosition()
+Point Spacecraft::getVelocity()
 {
-	return position[0];
-}
-
-double Spacecraft::getVertVelocity()
-{
-	return velocity[1];
-}
-
-double Spacecraft::getHorVelocity()
-{
-	return velocity[0];
+	return velocity;
 }
 
 double Spacecraft::getAngle()
@@ -64,22 +62,74 @@ double Spacecraft::getAngle()
 	return angle;
 }
 
-double Spacecraft::getMass()
-{
-	return mass;
-}
-
-double Spacecraft::getThrust()
-{
-	return thrust;
-}
-
-double Spacecraft::getSpeed()
-{
-	return speed;
-}
-
 double Spacecraft::getAcceleration()
 {
 	return acceleration;
+}
+
+double Spacecraft::getFuel()
+{
+	return fuel;
+}
+
+void Spacecraft::updateVertPosition(bool mainThrust)
+{
+	this->position.addY(p.deltaPosition(
+		this->velocity.getY(), // The ship's vertical velocity at the beginning of the time interval
+		p.computeVectorComponent(this->acceleration, this->angle) * mainThrust + p.getGravity(), // The ship's acceleration durring the time interval
+		p.getTimestep() // The time interval
+	));
+}
+
+void Spacecraft::updateHorPosition(bool mainThrust)
+{
+	this->position.addX(p.deltaPosition(
+		this->velocity.getX(), // The ship's vertical velocity at the beginning of the time interval
+		p.computeVectorComponent(this->acceleration, this->angle - p.getCircleConst()/4) * mainThrust, // The ship's acceleration durring the time interval
+		p.getTimestep() // The time interval
+	));
+}
+
+void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
+{
+	if (leftThrust)
+	{
+		this->angle -= 0.1;
+	}
+
+	if (rightThrust)
+	{
+		this->angle += 0.1;
+	}
+
+}
+
+void Spacecraft::updateVertVelocity(bool mainThrust)
+{
+	this->velocity.addY(p.deltaVelocity(
+		p.computeVectorComponent(this->acceleration, this->angle) * mainThrust + p.getGravity(), // The ship's acceleration durring the time interval
+		p.getTimestep() // The time interval
+	));
+}
+
+void Spacecraft::updateHorVelocity(bool mainThrust)
+{
+	this->velocity.addX(p.deltaVelocity(
+		p.computeVectorComponent(this->acceleration, this->angle - p.getCircleConst() / 4) * mainThrust, // The ship's acceleration durring the time interval
+		p.getTimestep() // The time interval
+	));
+}
+
+void Spacecraft::updateFuel(bool mainThrust)
+{
+	if (mainThrust)
+	{
+		this->fuel -= 0.1;
+	}
+
+}
+
+void Spacecraft::updateStatus(FlightStatus stat)
+{
+	this->status = stat;
 }
