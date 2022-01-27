@@ -141,7 +141,7 @@ void driver(double vv, double hv, double vp, double ang)
 
             lm.setHorVelocity(p.computeVelocity(
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()),
+                p.computeVectorComponent(lm.getAcceleration(), (p.circleConst / 4 - p.getRadians())),
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
@@ -155,7 +155,7 @@ void driver(double vv, double hv, double vp, double ang)
             lm.setHorPosition(p.computePosition(
                 lm.getHorPosition(), // The lunar module's initial horizontal position
                 lm.getHorVelocity(), // The lunar module's initial horizontal velocity
-                p.computeVectorComponent(lm.getAcceleration(), p.TAU / 4 - p.getRadians()),
+                p.computeVectorComponent(lm.getAcceleration(), p.circleConst / 4 - p.getRadians()),
                 // The lunar module's horizontal acceleration (horizontal acceleration from the engines)
                 1)); // One second of time elapsed
 
@@ -179,7 +179,7 @@ void driver(double vv, double hv, double vp, double ang)
             break;
         }
         else {
-            lm.setAngle(get_angle("\nWhat is your new angle (degrees)? "));
+            lm.setAngle(getAngle("\nWhat is your new angle (degrees)? "));
             p.setRadians(p.computeRadians(lm.getAngle()));
 
             cout << endl;
