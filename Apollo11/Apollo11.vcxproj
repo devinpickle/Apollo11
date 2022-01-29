@@ -144,8 +144,8 @@
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="spacecraft.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="spacecraft.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
   </ItemGroup>

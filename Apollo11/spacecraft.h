@@ -15,6 +15,8 @@
 #include "Point.h"
 #include "physics.h"
 
+enum class FlightStatus { flying, landed, crashed }; // Outside the class so anyone can use it without referencing class
+
 class Spacecraft
 {
 
@@ -24,13 +26,15 @@ private:
 	double angle;
 	double acceleration;
 	double fuel;
-	enum FlightStatus { flying, landed, crashed };
 	FlightStatus status;
 	Physics p;
+	
 
 public:
 	// Constructor
 	Spacecraft();
+
+	Spacecraft(const Point& pos, const Point& vel);
 
 	// Getters
 	Point getPosition();
@@ -53,6 +57,8 @@ public:
 	void updateHorVelocity(bool mainThrust);
 	void updateFuel(bool mainThrust);
 	void updateStatus(FlightStatus stat);
+
+	
 
 
 

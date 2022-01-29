@@ -1,23 +1,25 @@
-#pragma once
+#ifndef star_h
+#define star_h
 
 #include "Point.h"
 
-#ifndef star_h
-#define star_h
+
 
 
 
 class Star
 {
 	public:
+		Star(const Point& pt);
+		Star();
 		Point getPoint() { return p; }
-		unsigned char getPhase() { return phase; }
+		unsigned char getPhase() { return ++phase; }
 
 
 
 	private:
-		Point p = Point(200, 300);
-		unsigned char phase = rand() % 255;
+		Point p;
+		unsigned char phase;
 		
 
 };

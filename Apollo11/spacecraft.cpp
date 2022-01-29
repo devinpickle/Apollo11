@@ -8,11 +8,25 @@ Spacecraft::Spacecraft()
 {
 	acceleration = 15103 / 45000;
 	fuel = 3000;
-	status = flying;
+	status = FlightStatus::flying;
+	if (status == FlightStatus::flying)
 	Physics p;
-
 	angle = 0;
 }
+
+Spacecraft::Spacecraft(const Point& pos, const Point& vel) :
+	position(pos),
+	velocity(vel),
+	angle(0.0),
+	acceleration(15103.0 / 45000.0),
+	fuel(3000.0),
+	status(FlightStatus::flying),
+	p()
+{
+	
+}
+
+	
 
 
 /****************************************************************************************

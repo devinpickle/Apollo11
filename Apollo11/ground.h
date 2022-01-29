@@ -38,6 +38,11 @@ public:
          return 0.0;
    }
 
+   double getGroundHeight(double xCoord)
+   {
+       return ground[(int)xCoord];
+   }
+
    // on the platform
    bool onPlatform(const Point & position, int landerWidth) const;
 
