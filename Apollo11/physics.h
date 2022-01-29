@@ -23,7 +23,7 @@ private:
 
 public:
 	// Constructor
-	Physics();
+	//Physics();
 
 	// Getters
 	inline double getGravity() { return this->gravity; }
