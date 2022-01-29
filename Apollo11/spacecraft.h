@@ -50,6 +50,7 @@ public:
 	void setHorVelocity(double velocity);
 	void setAngle(double angle);
 	
+	// Updates
 	void updateVertPosition(bool mainThrust);
 	void updateHorPosition(bool mainThrust);
 	void updateAngle(bool leftThrust, bool rightThrust);

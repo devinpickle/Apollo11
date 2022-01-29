@@ -1,3 +1,25 @@
+/*************************************************************
+ * 1. Name:
+ *      Devin Picklesimer, Spencer Wadsworth, Collette Stapley
+ * 2. Assignment Name:
+ *      Lab 04: Apollo 11 Visuals
+ * 3. Assignment Description:
+ *      Simulate the Apollo 11 landing
+ * 4. What was the hardest part? Be as specific as possible.
+ *      A few difficult tasks for this assignment. One was going
+ *      into the given code and figuring out what the code actually
+ *      does and how our code and classes can fit into what was given
+ *      to us. Figuring out how to get all the stars to appear so
+ *      that they don't collide with the ground was also difficult.
+ *      Once you understand the given code more, however, things began
+ *      to go more smoothly.
+ * 5. How long did it take for you to complete the assignment?
+ *      Collectively this assignment took about 4.5-5 hours. We spent
+ *      a lot of this time (roughly 2 hours) going back and changing some of 
+        our class designs.
+ *****************************************************************/
+
+
 /**********************************************************************
  * GL Demo
  * Just a simple program to demonstrate how to create an Open GL window,
@@ -38,15 +60,20 @@ public:
 
     }
 
+    /************************************************************************
+     * InitializeStars
+     * Populates star array with 50 star objects, all with random positions
+     * and phases
+     ************************************************************************/
     void initializeStars()
     {
         for (int i = 0; i < NUMSTARS; i++)
         {
             double randomX = random(0.0, 400.0);
-            double randomY = random(ground.getGroundHeight(randomX) + 10, 400.0);
+            double randomY = random(ground.getGroundHeight(randomX) + 10, 400.0); // Make sure stars aren't drawn on top of ground
             Point starPt(randomX, randomY);
             Star s(starPt);
-            starList[i] = s;
+            starList[i] = s; // add star to starList
         }
     }
 
@@ -57,9 +84,9 @@ public:
     unsigned char phase;  // phase of the star's blinking
     Ground ground;
     Point ptStar;
-    Star starList[NUMSTARS];
+    Star starList[NUMSTARS]; // array holds 50 stars
     Point velocity;
-    Spacecraft LM;
+    Spacecraft LM; // spacecraft object
     
 
     
@@ -92,20 +119,24 @@ void callBack(const Interface* pUI, void* p)
     {
         pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() + 1);
         pDemo->LM.updateAngle(false, true);
+        pDemo->LM.updateFuel(true);
     }
     if (pUI->isLeft())
     {
         pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() - 1);
         pDemo->LM.updateAngle(true, false);
+        pDemo->LM.updateFuel(true);
     }
     if (pUI->isUp())
     {
         pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() - 1);
+        pDemo->LM.updateFuel(true);
         
     }
     if (pUI->isDown())
     {
         pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() + 1);
+        pDemo->LM.updateFuel(true);
     }
 
     
@@ -122,12 +153,8 @@ void callBack(const Interface* pUI, void* p)
     gout << "Fuel: " << pDemo->LM.getFuel() << "\n" <<
         "Altitude: 35 meters" << "\n" << "Speed: 12.91 m/s";
 
-    // draw our little star
-    /*for (int i = 0; i <= 50; i++)
-    {
-        int randomX = random()
-    }*/
-    gout.drawStar(pDemo->ptStar, pDemo->phase++);
+    // draw all our stars
+    gout.drawStar(pDemo->ptStar, pDemo->phase++); // test star
     for (int i = 0; i < NUMSTARS; i++)
     {
         gout.drawStar(pDemo->starList[i].getPoint(), pDemo->starList[i].getPhase());

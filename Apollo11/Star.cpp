@@ -2,8 +2,8 @@
 #include "uiDraw.h"
 
 Star::Star(const Point& pt) :
-	p(pt), 
-	phase(random(0,255))
+	p(pt), // Star position
+	phase(random(0,255)) // Random phase
 {
 
 }

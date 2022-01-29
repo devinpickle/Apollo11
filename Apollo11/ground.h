@@ -38,6 +38,7 @@ public:
          return 0.0;
    }
 
+   // Get the y coordinate(height) of ground at any x position
    double getGroundHeight(double xCoord)
    {
        return ground[(int)xCoord];

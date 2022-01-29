@@ -86,6 +86,11 @@ double Spacecraft::getFuel()
 	return fuel;
 }
 
+/************************************************************************
+ * UpdateVertPosition
+ * Updates the vertical position of the spacecraft if main thrusters 
+ * are on
+ ************************************************************************/
 void Spacecraft::updateVertPosition(bool mainThrust)
 {
 	this->position.addY(p.deltaPosition(
@@ -95,6 +100,11 @@ void Spacecraft::updateVertPosition(bool mainThrust)
 	));
 }
 
+/************************************************************************
+ * UpdateHorPosition
+ * Updates the horizontal position of the spacecraft if main thrusters
+ * are on
+ ************************************************************************/
 void Spacecraft::updateHorPosition(bool mainThrust)
 {
 	this->position.addX(p.deltaPosition(
@@ -104,6 +114,10 @@ void Spacecraft::updateHorPosition(bool mainThrust)
 	));
 }
 
+/************************************************************************
+ * UpdateAngle
+ * Updates the angle of the spacecraft based on side thruster activity
+ ************************************************************************/
 void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
 {
 	if (leftThrust)
@@ -118,6 +132,11 @@ void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
 
 }
 
+/************************************************************************
+ * UpdateVertVelocity
+ * Updates the vertical velocity of the spacecraft if main thrusters
+ * are on
+ ************************************************************************/
 void Spacecraft::updateVertVelocity(bool mainThrust)
 {
 	this->velocity.addY(p.deltaVelocity(
@@ -126,6 +145,11 @@ void Spacecraft::updateVertVelocity(bool mainThrust)
 	));
 }
 
+/************************************************************************
+ * UpdateHorVelocity
+ * Updates the horizontal velocity of the spacecraft if main thrusters
+ * are on
+ ************************************************************************/
 void Spacecraft::updateHorVelocity(bool mainThrust)
 {
 	this->velocity.addX(p.deltaVelocity(
@@ -134,15 +158,23 @@ void Spacecraft::updateHorVelocity(bool mainThrust)
 	));
 }
 
+/************************************************************************
+ * UpdateFuel
+ * Fuel depletes if main thrusters are active
+ ************************************************************************/
 void Spacecraft::updateFuel(bool mainThrust)
 {
 	if (mainThrust)
 	{
-		this->fuel -= 0.1;
+		this->fuel -= 1;
 	}
 
 }
 
+/************************************************************************
+ * UpdateStatus
+ * Change the status of the spacecraft
+ ************************************************************************/
 void Spacecraft::updateStatus(FlightStatus stat)
 {
 	this->status = stat;
