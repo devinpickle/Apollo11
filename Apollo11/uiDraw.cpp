@@ -69,7 +69,7 @@ inline void glVertexPoint(const Point& point)
  *************************************************************************/
 void ogstream::flush()
 {
-   string sOut;
+    string sOut;
    string sIn = str();
 
    // copy everything but the newlines
