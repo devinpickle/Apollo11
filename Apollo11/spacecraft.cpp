@@ -6,8 +6,8 @@ using namespace std;
 
 Spacecraft::Spacecraft()
 {
-	acceleration = 15103 / 45000;
-	fuel = 3000;
+	acceleration = (15103 / 45000) * 100;
+	fuel = 5000.0;
 	status = FlightStatus::flying;
 	if (status == FlightStatus::flying)
 	Physics p;
@@ -18,8 +18,8 @@ Spacecraft::Spacecraft(const Point& pos, const Point& vel) :
 	position(pos),
 	velocity(vel),
 	angle(0.0),
-	acceleration(15103.0 / 45000.0),
-	fuel(3000.0),
+	acceleration((15103.0 / 45000.0) * 100),
+	fuel(5000.0),
 	status(FlightStatus::flying),
 	p()
 {
@@ -86,6 +86,11 @@ double Spacecraft::getFuel()
 	return fuel;
 }
 
+double Spacecraft::getSpeed()
+{
+	return p.computeVectorMagnitude(velocity.getY(), velocity.getX());
+}
+
 /************************************************************************
  * UpdateVertPosition
  * Updates the vertical position of the spacecraft if main thrusters 
@@ -95,9 +100,10 @@ void Spacecraft::updateVertPosition(bool mainThrust)
 {
 	this->position.addY(p.deltaPosition(
 		this->velocity.getY(), // The ship's vertical velocity at the beginning of the time interval
-		p.computeVectorComponent(this->acceleration, this->angle) * mainThrust + p.getGravity(), // The ship's acceleration durring the time interval
+		(p.computeVectorComponent(this->acceleration, this->angle) * mainThrust) + p.getGravity(), // The ship's acceleration durring the time interval
 		p.getTimestep() // The time interval
 	));
+	
 }
 
 /************************************************************************
@@ -107,11 +113,12 @@ void Spacecraft::updateVertPosition(bool mainThrust)
  ************************************************************************/
 void Spacecraft::updateHorPosition(bool mainThrust)
 {
-	this->position.addX(p.deltaPosition(
+	this->position.addX((p.deltaPosition(
 		this->velocity.getX(), // The ship's vertical velocity at the beginning of the time interval
 		p.computeVectorComponent(this->acceleration, this->angle - p.getCircleConst()/4) * mainThrust, // The ship's acceleration durring the time interval
 		p.getTimestep() // The time interval
-	));
+	) * -1));
+	
 }
 
 /************************************************************************
@@ -162,12 +169,15 @@ void Spacecraft::updateHorVelocity(bool mainThrust)
  * UpdateFuel
  * Fuel depletes if main thrusters are active
  ************************************************************************/
-void Spacecraft::updateFuel(bool mainThrust)
+void Spacecraft::updateFuel(bool mainThrust, bool leftThrust, bool rightThrust)
 {
 	if (mainThrust)
-	{
+		this->fuel -= 10;
+	if (leftThrust)
 		this->fuel -= 1;
-	}
+	if (rightThrust)
+		this->fuel -= 1;
+
 
 }
 

@@ -16,7 +16,7 @@ class Physics
 	
 private:
 	// Constants
-	const double gravity = -1.625;
+	const double gravity = -1.625 * 5;
 	const double circleConst = 6.2831853071796; // The circle constant
 	const double timestep = 0.033333333333333333; // The length of one frame of the game's display
 

@@ -34,6 +34,7 @@
 #include "spacecraft.h"
 #include <string>  
 #include <sstream> 
+#include <iomanip>
 using namespace std;
 
 const int NUMSTARS = 50;
@@ -48,8 +49,7 @@ class Demo
 public:
     Demo(const Point& ptUpperRight) :
         ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
-        ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY() / 2.0),
-        angle(0.0),
+        ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY()),
         ground(ptUpperRight),
         velocity(0.0, 0.0),
         LM(ptLM, velocity)
@@ -80,7 +80,6 @@ public:
     // this is just for test purposes.  Don't make member variables public!
     Point ptLM;           // location of the LM on the screen
     Point ptUpperRight;   // size of the screen
-    double angle;         // angle the LM is pointing
     unsigned char phase;  // phase of the star's blinking
     Ground ground;
     Point ptStar;
@@ -114,44 +113,64 @@ void callBack(const Interface* pUI, void* p)
     // is the first step of every single callback function in OpenGL. 
     Demo* pDemo = (Demo*)p;
 
-    // move the ship around
-    if (pUI->isRight())
-    {
-        pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() + 1);
-        pDemo->LM.updateAngle(false, true);
-        pDemo->LM.updateFuel(true);
-    }
-    if (pUI->isLeft())
-    {
-        pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() - 1);
-        pDemo->LM.updateAngle(true, false);
-        pDemo->LM.updateFuel(true);
-    }
-    if (pUI->isUp())
-    {
-        pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() - 1);
-        pDemo->LM.updateFuel(true);
-        
-    }
-    if (pUI->isDown())
-    {
-        pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() + 1);
-        pDemo->LM.updateFuel(true);
-    }
+    //// move the ship around
+    //if (pUI->isRight())
+    //{
+    //    pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() + 1);
+    //    
+    //}
+    //if (pUI->isLeft())
+    //{
+    //    pDemo->LM.setHorPosition(pDemo->LM.getPosition().getX() - 1);
+    //    
+    //}
+    //if (pUI->isUp())
+    //{
+    //    pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() - 1);
+    //    
+    //}
+    //if (pUI->isDown())
+    //{
+    //    pDemo->LM.setVertPosition(pDemo->LM.getPosition().getY() + 1);
+    //}
 
     
+
+    if (pDemo->LM.getStatus() == FlightStatus::flying) {
+        if (pDemo->LM.getFuel() > 0) {
+            pDemo->LM.updateAngle(pUI->isLeft(), pUI->isRight());
+            pDemo->LM.updateFuel(pUI->isDown(), pUI->isLeft(), pUI->isRight());
+            pDemo->LM.updateHorPosition(pUI->isDown());
+            pDemo->LM.updateVertPosition(pUI->isDown());
+            pDemo->LM.updateHorVelocity(pUI->isDown());
+            pDemo->LM.updateVertVelocity(pUI->isDown());
+            // Draw lander flames if fuel is available
+            gout.drawLanderFlames(pDemo->LM.getPosition(), pDemo->LM.getAngle(), /*angle*/
+                pUI->isDown(), pUI->isLeft(), pUI->isRight());
+        }
+        else {
+            pDemo->LM.updateHorPosition(false);
+            pDemo->LM.updateVertPosition(false);
+            pDemo->LM.updateHorVelocity(false);
+            pDemo->LM.updateVertVelocity(false);
+        }
+        
+    }
+    
+
+
     // draw the ground
     pDemo->ground.draw(gout);
 
     // draw the lander and its flames
     gout.drawLander(pDemo->LM.getPosition() /*position*/, pDemo->LM.getAngle() /*angle*/);
-    gout.drawLanderFlames(pDemo->LM.getPosition(), pDemo->LM.getAngle(), /*angle*/
-        pUI->isDown(), pUI->isLeft(), pUI->isRight());
+    
 
     // put some text on the screen
     gout.setPosition(Point(5.0, 380.0));
     gout << "Fuel: " << pDemo->LM.getFuel() << "\n" <<
-        "Altitude: 35 meters" << "\n" << "Speed: 12.91 m/s";
+        "Altitude: " << fixed<<setprecision(0)<<pDemo->ground.getElevation(pDemo->LM.getPosition()) << " meters" << "\n" << 
+        "Speed: " << fixed<<setprecision(2)<<pDemo->LM.getSpeed() << " m/s";
 
     // draw all our stars
     gout.drawStar(pDemo->ptStar, pDemo->phase++); // test star
@@ -160,6 +179,48 @@ void callBack(const Interface* pUI, void* p)
         gout.drawStar(pDemo->starList[i].getPoint(), pDemo->starList[i].getPhase());
     }
 
+    // Collisions
+    // Check for successful landing
+    if (pDemo->ground.onPlatform(pDemo->LM.getPosition(), 20))
+    {
+        if (abs(pDemo->LM.getAngle()) <= 0.3 && pDemo->LM.getSpeed() <= 8.0)
+            pDemo->LM.updateStatus(FlightStatus::landed);  
+        else 
+            pDemo->LM.updateStatus(FlightStatus::crashed);   
+    }
+    else if (pDemo->ground.hitGround(pDemo->LM.getPosition(), 20))
+        pDemo->LM.updateStatus(FlightStatus::crashed);
+
+    switch (pDemo->LM.getStatus())
+    {
+        case FlightStatus::landed:
+            pDemo->LM.setAngle(0.0);
+            gout.setPosition(Point(250.0, 380.0));
+            gout << "The Eagle has landed!";
+            break;
+        case FlightStatus::crashed:
+            pDemo->LM.setAngle(3.14);
+            gout.setPosition(Point(250.0, 380.0));
+            gout << "Houston We Have A Problem";
+            break;
+    }
+    
+    //{
+    //    pDemo->LM.updateStatus(FlightStatus::landed);
+    //    pDemo->LM.setAngle(0.0);
+    //    gout.setPosition(Point(250.0, 380.0));
+    //    gout << "The Eagle has landed!";
+    //}
+    //// Check for ground crash
+    //else if (pDemo->ground.hitGround(pDemo->LM.getPosition(), 20))
+    //{
+    //    pDemo->LM.updateStatus(FlightStatus::crashed);
+    //    pDemo->LM.setAngle(3.14);
+    //    gout.setPosition(Point(250.0, 380.0));
+    //    gout << "Houston We Have A Problem";
+    //    
+    //    
+    //}
 
 
 }

@@ -42,6 +42,9 @@ public:
 	double getAngle();
 	double getAcceleration();
 	double getFuel();
+	FlightStatus getStatus() { return this->status; }
+	double getSpeed();
+
 
 	// Setters
 	void setVertPosition(double postion);
@@ -56,7 +59,7 @@ public:
 	void updateAngle(bool leftThrust, bool rightThrust);
 	void updateVertVelocity(bool mainThrust);
 	void updateHorVelocity(bool mainThrust);
-	void updateFuel(bool mainThrust);
+	void updateFuel(bool mainThrust, bool leftThrust, bool rightThrust);
 	void updateStatus(FlightStatus stat);
 
 	
