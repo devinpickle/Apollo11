@@ -36,9 +36,6 @@ Spacecraft::Spacecraft(const Point& pos, const Point& vel) :
 	
 }
 
-	
-
-
 /********************************************************************
 * Setters: All the set functions store the desired value
 *********************************************************************/
@@ -66,7 +63,6 @@ void Spacecraft::setHorVelocity(double vel)
 {
 	this->velocity.setX(vel);
 }
-
 
 /********************************************************************
 * Getters: All the get functions return the desired value
@@ -113,7 +109,6 @@ void Spacecraft::updateVertPosition(bool mainThrust)
 		(p.computeVectorComponent(this->acceleration, this->angle) * mainThrust) + p.getGravity(), // The ship's acceleration durring the time interval
 		p.getTimestep() // The time interval
 	));
-	
 }
 
 /********************************************************************
@@ -128,7 +123,6 @@ void Spacecraft::updateHorPosition(bool mainThrust)
 		p.computeVectorComponent(this->acceleration, this->angle - p.getCircleConst()/4) * mainThrust, // The ship's acceleration durring the time interval
 		p.getTimestep() // The time interval
 	) * -1));
-	
 }
 
 /********************************************************************
@@ -146,7 +140,6 @@ void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
 	{
 		this->angle += 0.1;
 	}
-
 }
 
 /********************************************************************
@@ -187,8 +180,6 @@ void Spacecraft::updateFuel(bool mainThrust, bool leftThrust, bool rightThrust)
 		this->fuel -= 1;
 	if (rightThrust)
 		this->fuel -= 1;
-
-
 }
 
 /********************************************************************

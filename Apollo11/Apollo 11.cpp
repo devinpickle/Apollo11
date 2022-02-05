@@ -18,13 +18,6 @@
  *      sure things worked right.
  **********************************************************************/
 
-
-/**********************************************************************
- * Apollo 11
- * Simulate the Apollo 11 landing in a simulator format.
- * Runs the base simulation and calls neccessary classes.
- **********************************************************************/
-
 #include "point.h"
 #include "uiInteract.h"
 #include "uiDraw.h"
@@ -38,10 +31,9 @@ using namespace std;
 
 const int NUMSTARS = 50;
 
-
 /*************************************************************************
- * 
- * Test structure to capture the LM that will move around the screen
+ * Apollo11
+ * Main class that runs the "Game" simulation
  *************************************************************************/
 class Apollo11
 {
@@ -53,10 +45,8 @@ public:
         velocity(0.0, 0.0),
         LM(ptLM, velocity)
     {
-
         phase = random(0, 255);
         initializeStars();
-
     }
 
     /**********************************************************************
@@ -85,8 +75,6 @@ public:
     Star starList[NUMSTARS]; // array holds 50 stars
     Point velocity;
     Spacecraft LM; // spacecraft object
-    
-
 };
 
 /************************************************************************
@@ -103,9 +91,6 @@ void callBack(const Interface* pUI, void* p)
     // the first step is to cast the void pointer into a game object. This
     // is the first step of every single callback function in OpenGL. 
     Apollo11* pApollo11 = (Apollo11*)p;
-
-
-    
 
     if (pApollo11->LM.getStatus() == FlightStatus::flying) {
         if (pApollo11->LM.getFuel() > 0) {
@@ -127,15 +112,12 @@ void callBack(const Interface* pUI, void* p)
         }
         
     }
-    
-
 
     // draw the ground
     pApollo11->ground.draw(gout);
 
     // draw the lander and its flames
     gout.drawLander(pApollo11->LM.getPosition() /*position*/, pApollo11->LM.getAngle() /*angle*/);
-    
 
     // put some text on the screen
     gout.setPosition(Point(5.0, 380.0));

@@ -87,8 +87,6 @@ private:
    static bool isSpacePress;         //    "   space      "
 };
 
-
-
 /************************************************************************
  * DRAW CALLBACK
  * This is the main callback from OpenGL. It gets called constantly by

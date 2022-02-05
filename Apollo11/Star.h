@@ -13,10 +13,6 @@
 
 #include "Point.h"
 
-
-
-
-
 class Star
 {
 	public:
@@ -28,13 +24,9 @@ class Star
 		Point getPoint() { return p; }
 		unsigned char getPhase() { return ++phase; }
 
-
-
 	private:
 		Point p;
 		unsigned char phase;
-		
-
 };
 
 #endif // !star_h

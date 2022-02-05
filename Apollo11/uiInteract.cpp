@@ -16,7 +16,6 @@
 #include <time.h>     // for clock
 #include <cstdlib>    // for rand()
 
-
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
 #include <openGL/gl.h>    // Main OpenGL library
@@ -43,7 +42,6 @@
 #include "point.h"
 
 using namespace std;
-
 
 /*********************************************************************
  * SLEEP
@@ -256,7 +254,6 @@ unsigned long Interface::nextTick     = 0;        // redraw now please
 void *       Interface::p            = NULL;
 void (*Interface::callBack)(const Interface *, void *) = NULL;
 
-
 /************************************************************************
  * INTEFACE : INITIALIZE
  * Initialize our drawing window.  This will set the size and position,
@@ -289,7 +286,6 @@ void Interface::initialize(int argc, char ** argv, const char * title, const Poi
    gluOrtho2D(0, ptUpperRight.getX(),       // range of x values: (0, width)
               0, ptUpperRight.getY());      // range of y values: (0, height)
    glutReshapeWindow(ptUpperRight.getX(), ptUpperRight.getY());
-
    
    // register the callbacks so OpenGL knows how to call us
    glutDisplayFunc(   drawCallback    );

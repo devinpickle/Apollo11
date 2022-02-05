@@ -21,7 +21,6 @@ using std::string;
 using std::min;
 using std::max;
 
-
 /*************************************************************************
  * GRAPHICS STREAM
  * A graphics stream that behaves much like COUT except on a drawn screen.
@@ -75,7 +74,6 @@ private:
                 double rotation = 0.0) const;
    
    void drawText(const Point & topLeft, const char * text) const;
-
 };
 
 /******************************************************************

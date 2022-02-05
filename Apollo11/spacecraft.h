@@ -10,7 +10,6 @@
 
 #pragma once
 
-
 #ifndef spacecraft_h // prevents the header from being imported multiple times
 #define spacecraft_h
 
@@ -21,7 +20,6 @@ enum class FlightStatus { flying, landed, crashed }; // Outside the class so any
 
 class Spacecraft
 {
-
 private:
 	Point position;
 	Point velocity;
@@ -30,7 +28,6 @@ private:
 	double fuel;
 	FlightStatus status;
 	Physics p;
-	
 
 public:
 	// Constructor
@@ -47,7 +44,6 @@ public:
 	FlightStatus getStatus() { return this->status; }
 	double getSpeed();
 
-
 	// Setters
 	void setVertPosition(double postion);
 	void setHorPosition(double position);
@@ -63,11 +59,6 @@ public:
 	void updateHorVelocity(bool mainThrust);
 	void updateFuel(bool mainThrust, bool leftThrust, bool rightThrust);
 	void updateStatus(FlightStatus stat);
-
-	
-
-
-
 
 };
 

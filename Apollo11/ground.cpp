@@ -137,5 +137,4 @@ void Ground::draw(ogstream & gout) const
    gout.drawRectangle(Point((double)iLZ, ground[iLZ]),
                       Point((double)(iLZ + LZ_SIZE), ground[iLZ] - 2.0),
                       0.0 /*red*/, 0.0 /*green*/, 1.0 /*blue*/);
-
 }
