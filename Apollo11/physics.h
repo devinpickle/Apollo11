@@ -1,11 +1,12 @@
-/*****************************
+/********************************************************************
  * Header File:
  *    physics
  * Author:
  *    Spencer Wadsworth, Collette Stapley, Devin Picklesimer
  * Summary:
- *    A physics class that is called to take care of computations for changing velocities, positions, etc.
- *****************************/
+ *    A physics class that is called to take care of computations for 
+ *	  changing velocities, positions, etc.
+ *********************************************************************/
 #pragma once
 
 #ifndef physics_h // prevents the header from being imported multiple times

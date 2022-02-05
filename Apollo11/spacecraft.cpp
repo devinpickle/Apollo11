@@ -1,3 +1,13 @@
+/********************************************************************
+ * Header File:
+ *    spacecraft
+ * Author:
+ *    Spencer Wadsworth, Devin Picklesimer, Collette Stapley
+ * Summary:
+ *    Designed to represent the lunar module; Keeps track of its own 
+ *	  position, velocity, angle, etc.
+ ********************************************************************/
+
 #include "spacecraft.h"
 #include "physics.h"
 #include <iostream>
@@ -29,9 +39,9 @@ Spacecraft::Spacecraft(const Point& pos, const Point& vel) :
 	
 
 
-/****************************************************************************************
+/********************************************************************
 * Setters: All the set functions store the desired value
-****************************************************************************************/
+*********************************************************************/
 void Spacecraft::setVertPosition(double pos)
 {
 	this->position.setY(pos);
@@ -58,9 +68,9 @@ void Spacecraft::setHorVelocity(double vel)
 }
 
 
-/****************************************************************************************
+/********************************************************************
 * Getters: All the get functions return the desired value
-****************************************************************************************/
+*********************************************************************/
 Point Spacecraft::getPosition()
 {
 	return position;
@@ -91,11 +101,11 @@ double Spacecraft::getSpeed()
 	return p.computeVectorMagnitude(velocity.getY(), velocity.getX());
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateVertPosition
  * Updates the vertical position of the spacecraft if main thrusters 
  * are on
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateVertPosition(bool mainThrust)
 {
 	this->position.addY(p.deltaPosition(
@@ -106,11 +116,11 @@ void Spacecraft::updateVertPosition(bool mainThrust)
 	
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateHorPosition
  * Updates the horizontal position of the spacecraft if main thrusters
  * are on
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateHorPosition(bool mainThrust)
 {
 	this->position.addX((p.deltaPosition(
@@ -121,10 +131,10 @@ void Spacecraft::updateHorPosition(bool mainThrust)
 	
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateAngle
  * Updates the angle of the spacecraft based on side thruster activity
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
 {
 	if (leftThrust)
@@ -139,11 +149,11 @@ void Spacecraft::updateAngle(bool leftThrust, bool rightThrust)
 
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateVertVelocity
  * Updates the vertical velocity of the spacecraft if main thrusters
  * are on
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateVertVelocity(bool mainThrust)
 {
 	this->velocity.addY(p.deltaVelocity(
@@ -152,11 +162,11 @@ void Spacecraft::updateVertVelocity(bool mainThrust)
 	));
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateHorVelocity
  * Updates the horizontal velocity of the spacecraft if main thrusters
  * are on
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateHorVelocity(bool mainThrust)
 {
 	this->velocity.addX(p.deltaVelocity(
@@ -165,10 +175,10 @@ void Spacecraft::updateHorVelocity(bool mainThrust)
 	));
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateFuel
  * Fuel depletes if main thrusters are active
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateFuel(bool mainThrust, bool leftThrust, bool rightThrust)
 {
 	if (mainThrust)
@@ -181,10 +191,10 @@ void Spacecraft::updateFuel(bool mainThrust, bool leftThrust, bool rightThrust)
 
 }
 
-/************************************************************************
+/********************************************************************
  * UpdateStatus
  * Change the status of the spacecraft
- ************************************************************************/
+ ********************************************************************/
 void Spacecraft::updateStatus(FlightStatus stat)
 {
 	this->status = stat;

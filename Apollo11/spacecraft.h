@@ -1,11 +1,13 @@
-/*****************************
+/********************************************************************
  * Header File:
  *    spacecraft
  * Author:
  *    Spencer Wadsworth, Devin Picklesimer, Collette Stapley
  * Summary:
- *    Designed to represent the lunar module; Keeps track of its own position, velocity, angle, etc.
- *****************************/
+ *    Designed to represent the lunar module; Keeps track of its own 
+ *	  position, velocity, angle, etc.
+ ********************************************************************/
+
 #pragma once
 
 

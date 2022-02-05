@@ -1,11 +1,13 @@
-/*****************************
+/********************************************************************
  * Header File:
  *    star
  * Author:
  *    Devin Picklesimer, Collette Stapley, Spencer Wadsworth
  * Summary:
- *    A star class that is has a position and phase of twinkling animation
- *****************************/
+ *    A star class that is has a position and phase of twinkling 
+ *	  animation
+ ********************************************************************/
+
 #ifndef star_h
 #define star_h
 
