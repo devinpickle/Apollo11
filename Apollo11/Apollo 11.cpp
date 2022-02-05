@@ -110,7 +110,6 @@ void callBack(const Interface* pUI, void* p)
             pApollo11->LM.updateHorVelocity(false);
             pApollo11->LM.updateVertVelocity(false);
         }
-        
     }
 
     // draw the ground
