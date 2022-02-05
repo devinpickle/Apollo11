@@ -139,8 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Apollo11.cpp" />
-    <ClCompile Include="glDemo.cpp" />
+    <ClCompile Include="Apollo 11.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="Point.cpp" />

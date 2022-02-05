@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Apollo11.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="spacecraft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -27,7 +24,7 @@
     <ClCompile Include="Point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="glDemo.cpp">
+    <ClCompile Include="Apollo 11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ground.cpp">
