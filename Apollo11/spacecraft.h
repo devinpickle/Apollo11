@@ -34,18 +34,12 @@ private:
 	Physics p;
 
 public:
-	// Constructor
+	// Default Constructor
 	Spacecraft();
-
+	// Start With Specific position and velocity
 	Spacecraft(const Point& pos, const Point& vel);
 
 	// Getters
-	Point getPosition();
-	Point getVelocity();
-	double getAngle();
-	double getAcceleration();
-	double getFuel();
-	FlightStatus getStatus() { return this->status; }
 	double getSpeed();
 
 	// Setters
@@ -65,8 +59,10 @@ public:
 	void updateStatus(FlightStatus stat);
 	void updateSpacecraft(const Interface* pUI, ogstream& gout);
 
+	// Draw
 	void drawSpacecraft(ogstream & gout, Ground & ground);
 
+	// Collision Handler
 	void checkCollisions(Ground& ground, ogstream& gout);
 
 	

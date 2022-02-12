@@ -39,8 +39,7 @@ public:
     Apollo11(const Point& ptUpperRight) :
         ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY()),
         ground(ptUpperRight),
-        velocity(0.0, 0.0),
-        LM(ptLM, velocity),
+        LM(),
         starField(this->ground)
     {
     }
@@ -49,7 +48,6 @@ public:
     // this is just for test purposes.  Don't make member variables public!
     Point ptLM;           // location of the LM on the screen
     Ground ground;
-    Point velocity;
     Spacecraft LM; // spacecraft object
     starField starField; 
 };

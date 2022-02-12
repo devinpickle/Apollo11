@@ -15,14 +15,15 @@
 using namespace std;
 
 
-Spacecraft::Spacecraft()
+Spacecraft::Spacecraft() : 
+	position(Point(400.0, 380.0)),
+	velocity(15.0, 0.0), // Come in from the side
+	angle(0),
+	acceleration((15103.0 / 45000.0) * 100),
+	fuel(5000.0),
+	status(FlightStatus::flying),
+	p()
 {
-	acceleration = (15103.0 / 45000.0) * 100;
-	fuel = 5000.0;
-	status = FlightStatus::flying;
-	if (status == FlightStatus::flying)
-	Physics p;
-	angle = 0;
 }
 
 Spacecraft::Spacecraft(const Point& pos, const Point& vel) :
@@ -68,30 +69,16 @@ void Spacecraft::setHorVelocity(double vel)
 /********************************************************************
 * Getters: All the get functions return the desired value
 *********************************************************************/
-Point Spacecraft::getPosition()
-{
-	return position;
-}
+//Point Spacecraft::getPosition()
+//{
+//	return position;
+//}
 
-Point Spacecraft::getVelocity()
-{
-	return velocity;
-}
 
-double Spacecraft::getAngle()
-{
-	return angle;
-}
-
-double Spacecraft::getAcceleration()
-{
-	return acceleration;
-}
-
-double Spacecraft::getFuel()
-{
-	return fuel;
-}
+//double Spacecraft::getFuel()
+//{
+//	return fuel;
+//}
 
 double Spacecraft::getSpeed()
 {
@@ -217,8 +204,8 @@ void Spacecraft::drawSpacecraft(ogstream & gout, Ground & ground)
 **********************************************************************/
 void Spacecraft::updateSpacecraft(const Interface* pUI, ogstream& gout)
 {
-	if (getStatus() == FlightStatus::flying) {
-		if (getFuel() > 0) {
+	if (this->status == FlightStatus::flying) {
+		if (this->fuel > 0) {
 			updateAngle(pUI->isLeft(), pUI->isRight());
 			updateFuel(pUI->isDown(), pUI->isLeft(), pUI->isRight());
 			updateHorPosition(pUI->isDown());
@@ -226,7 +213,7 @@ void Spacecraft::updateSpacecraft(const Interface* pUI, ogstream& gout)
 			updateHorVelocity(pUI->isDown());
 			updateVertVelocity(pUI->isDown());
 			// Draw lander flames if fuel is available
-			gout.drawLanderFlames(getPosition(), getAngle(), /*angle*/
+			gout.drawLanderFlames(this->position, this->angle, /*angle*/
 				pUI->isDown(), pUI->isLeft(), pUI->isRight());
 		}
 		else {
@@ -240,17 +227,17 @@ void Spacecraft::updateSpacecraft(const Interface* pUI, ogstream& gout)
 
 void Spacecraft::checkCollisions(Ground & ground, ogstream & gout)
 {
-	if (ground.onPlatform(getPosition(), 20))
+	if (ground.onPlatform(this->position, 20))
 	{
-		if (abs(getAngle()) <= 0.3 && getSpeed() <= 4.0)
+		if (abs(this->angle) <= 0.3 && getSpeed() <= 8.0)
 			updateStatus(FlightStatus::landed);
 		else
 			updateStatus(FlightStatus::crashed);
 	}
-	else if (ground.hitGround(getPosition(), 20))
+	else if (ground.hitGround(this->position, 20))
 		updateStatus(FlightStatus::crashed);
 
-	switch (getStatus())
+	switch (this->status)
 	{
 	case FlightStatus::landed:
 		setAngle(0.0);
