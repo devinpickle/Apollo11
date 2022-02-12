@@ -25,6 +25,7 @@ class Star
 		Point getPoint() { return p; }
 		unsigned char getPhase() { return ++phase; }
 
+		// Draw individual star
 		void drawStar(ogstream & gout);
 
 		

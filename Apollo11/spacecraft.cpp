@@ -192,8 +192,11 @@ void Spacecraft::updateStatus(FlightStatus stat)
 	this->status = stat;
 }
 
-
-void Spacecraft::drawSpacecraft(ogstream & gout, Ground ground)
+/**********************************************************************
+	 * drawSpacecraft
+	 * Draws lunar lander and its status on the screen
+**********************************************************************/
+void Spacecraft::drawSpacecraft(ogstream & gout, Ground & ground)
 {
 	// draw the lander and its flames
 	gout.drawLander(this->position /*position*/, this->angle /*angle*/);
@@ -207,6 +210,11 @@ void Spacecraft::drawSpacecraft(ogstream & gout, Ground ground)
 	
 }
 
+/**********************************************************************
+	 * updateSpacecraft
+	 * Updates all properties of spacecraft based on status
+	 * and fuel
+**********************************************************************/
 void Spacecraft::updateSpacecraft(const Interface* pUI, ogstream& gout)
 {
 	if (getStatus() == FlightStatus::flying) {

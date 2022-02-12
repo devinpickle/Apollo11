@@ -65,7 +65,7 @@ public:
 	void updateStatus(FlightStatus stat);
 	void updateSpacecraft(const Interface* pUI, ogstream& gout);
 
-	void drawSpacecraft(ogstream & gout, Ground ground);
+	void drawSpacecraft(ogstream & gout, Ground & ground);
 
 	void checkCollisions(Ground& ground, ogstream& gout);
 

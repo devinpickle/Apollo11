@@ -29,6 +29,10 @@ Star::Star()
 
 }
 
+/**********************************************************************
+	 * drawStar
+	 * Draws single star on screen
+**********************************************************************/
 void Star::drawStar(ogstream & gout)
 {
 	gout.drawStar(this->getPoint(), this->getPhase());

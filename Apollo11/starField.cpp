@@ -1,6 +1,7 @@
 #include "starField.h"
 #include "uiDraw.h"
 
+// Constructor
 starField::starField(Ground& grnd) : ground(grnd) 
 {
     initializeStars();
@@ -23,6 +24,11 @@ void starField::initializeStars()
     }
 }
 
+/**********************************************************************
+     * drawStars
+     * Draws all stars in the starfield by calling drawStar function
+     * for each star
+**********************************************************************/
 void starField::drawStars(ogstream & gout)
 {
     for (int i = 0; i < numstars; i++)
