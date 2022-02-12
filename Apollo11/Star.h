@@ -12,6 +12,7 @@
 #define star_h
 
 #include "Point.h"
+#include "uiDraw.h"
 
 class Star
 {
@@ -23,6 +24,10 @@ class Star
 		// Getters
 		Point getPoint() { return p; }
 		unsigned char getPhase() { return ++phase; }
+
+		void drawStar(ogstream & gout);
+
+		
 
 	private:
 		Point p;

@@ -11,12 +11,13 @@
 #include "spacecraft.h"
 #include "physics.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 
 Spacecraft::Spacecraft()
 {
-	acceleration = (15103 / 45000) * 100;
+	acceleration = (15103.0 / 45000.0) * 100;
 	fuel = 5000.0;
 	status = FlightStatus::flying;
 	if (status == FlightStatus::flying)
@@ -189,4 +190,69 @@ void Spacecraft::updateFuel(bool mainThrust, bool leftThrust, bool rightThrust)
 void Spacecraft::updateStatus(FlightStatus stat)
 {
 	this->status = stat;
+}
+
+
+void Spacecraft::drawSpacecraft(ogstream & gout, Ground ground)
+{
+	// draw the lander and its flames
+	gout.drawLander(this->position /*position*/, this->angle /*angle*/);
+
+	// draw stats which are part of spacecraft
+	// put some text on the screen
+	gout.setPosition(Point(5.0, 380.0));
+	gout << "Fuel: " << this->fuel << "\n" <<
+		"Altitude: " << fixed << setprecision(0) << ground.getElevation(this->position) << " meters" << "\n" <<
+		"Speed: " << fixed << setprecision(2) << this->getSpeed() << " m/s";
+	
+}
+
+void Spacecraft::updateSpacecraft(const Interface* pUI, ogstream& gout)
+{
+	if (getStatus() == FlightStatus::flying) {
+		if (getFuel() > 0) {
+			updateAngle(pUI->isLeft(), pUI->isRight());
+			updateFuel(pUI->isDown(), pUI->isLeft(), pUI->isRight());
+			updateHorPosition(pUI->isDown());
+			updateVertPosition(pUI->isDown());
+			updateHorVelocity(pUI->isDown());
+			updateVertVelocity(pUI->isDown());
+			// Draw lander flames if fuel is available
+			gout.drawLanderFlames(getPosition(), getAngle(), /*angle*/
+				pUI->isDown(), pUI->isLeft(), pUI->isRight());
+		}
+		else {
+			updateHorPosition(false);
+			updateVertPosition(false);
+			updateHorVelocity(false);
+			updateVertVelocity(false);
+		}
+	}
+}
+
+void Spacecraft::checkCollisions(Ground & ground, ogstream & gout)
+{
+	if (ground.onPlatform(getPosition(), 20))
+	{
+		if (abs(getAngle()) <= 0.3 && getSpeed() <= 4.0)
+			updateStatus(FlightStatus::landed);
+		else
+			updateStatus(FlightStatus::crashed);
+	}
+	else if (ground.hitGround(getPosition(), 20))
+		updateStatus(FlightStatus::crashed);
+
+	switch (getStatus())
+	{
+	case FlightStatus::landed:
+		setAngle(0.0);
+		gout.setPosition(Point(200.0, 380.0));
+		gout << "The Eagle has landed!";
+		break;
+	case FlightStatus::crashed:
+		setAngle(3.14);
+		gout.setPosition(Point(200.0, 380.0));
+		gout << "Houston We Have A Problem";
+		break;
+	}
 }

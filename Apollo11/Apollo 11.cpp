@@ -24,12 +24,10 @@
 #include "ground.h"
 #include "Star.h"
 #include "spacecraft.h"
+#include "starField.h"
 #include <string>  
 #include <sstream> 
-#include <iomanip>
 using namespace std;
-
-const int NUMSTARS = 50;
 
 /*************************************************************************
  * Apollo11
@@ -39,42 +37,21 @@ class Apollo11
 {
 public:
     Apollo11(const Point& ptUpperRight) :
-        ptStar(ptUpperRight.getX() - 20.0, ptUpperRight.getY() - 20.0),
         ptLM(ptUpperRight.getX() / 2.0, ptUpperRight.getY()),
         ground(ptUpperRight),
         velocity(0.0, 0.0),
-        LM(ptLM, velocity)
+        LM(ptLM, velocity),
+        starField(this->ground)
     {
-        phase = random(0, 255);
-        initializeStars();
     }
 
-    /**********************************************************************
-     * InitializeStars
-     * Populates star array with 50 star objects, all with random positions
-     * and phases
-     **********************************************************************/
-    void initializeStars()
-    {
-        for (int i = 0; i < NUMSTARS; i++)
-        {
-            double randomX = random(0.0, 400.0);
-            double randomY = random(ground.getGroundHeight(randomX) + 10, 400.0); // Make sure stars aren't drawn on top of ground
-            Point starPt(randomX, randomY);
-            Star s(starPt);
-            starList[i] = s; // add star to starList
-        }
-    }
 
     // this is just for test purposes.  Don't make member variables public!
     Point ptLM;           // location of the LM on the screen
-    Point ptUpperRight;   // size of the screen
-    unsigned char phase;  // phase of the star's blinking
     Ground ground;
-    Point ptStar;
-    Star starList[NUMSTARS]; // array holds 50 stars
     Point velocity;
     Spacecraft LM; // spacecraft object
+    starField starField; 
 };
 
 /************************************************************************
@@ -92,70 +69,21 @@ void callBack(const Interface* pUI, void* p)
     // is the first step of every single callback function in OpenGL. 
     Apollo11* pApollo11 = (Apollo11*)p;
 
-    if (pApollo11->LM.getStatus() == FlightStatus::flying) {
-        if (pApollo11->LM.getFuel() > 0) {
-            pApollo11->LM.updateAngle(pUI->isLeft(), pUI->isRight());
-            pApollo11->LM.updateFuel(pUI->isDown(), pUI->isLeft(), pUI->isRight());
-            pApollo11->LM.updateHorPosition(pUI->isDown());
-            pApollo11->LM.updateVertPosition(pUI->isDown());
-            pApollo11->LM.updateHorVelocity(pUI->isDown());
-            pApollo11->LM.updateVertVelocity(pUI->isDown());
-            // Draw lander flames if fuel is available
-            gout.drawLanderFlames(pApollo11->LM.getPosition(), pApollo11->LM.getAngle(), /*angle*/
-                pUI->isDown(), pUI->isLeft(), pUI->isRight());
-        }
-        else {
-            pApollo11->LM.updateHorPosition(false);
-            pApollo11->LM.updateVertPosition(false);
-            pApollo11->LM.updateHorVelocity(false);
-            pApollo11->LM.updateVertVelocity(false);
-        }
-    }
+    // Update the spacecraft (position, velocity, fuel, etc)
+    pApollo11->LM.updateSpacecraft(pUI, gout);
 
     // draw the ground
     pApollo11->ground.draw(gout);
 
-    // draw the lander and its flames
-    gout.drawLander(pApollo11->LM.getPosition() /*position*/, pApollo11->LM.getAngle() /*angle*/);
-
-    // put some text on the screen
-    gout.setPosition(Point(5.0, 380.0));
-    gout << "Fuel: " << pApollo11->LM.getFuel() << "\n" <<
-        "Altitude: " << fixed<<setprecision(0)<<pApollo11->ground.getElevation(pApollo11->LM.getPosition()) << " meters" << "\n" << 
-        "Speed: " << fixed<<setprecision(2)<<pApollo11->LM.getSpeed() << " m/s";
+    // draw spacecraft and its stats
+    pApollo11->LM.drawSpacecraft(gout, pApollo11->ground);
 
     // draw all our stars
-    gout.drawStar(pApollo11->ptStar, pApollo11->phase++); // test star
-    for (int i = 0; i < NUMSTARS; i++)
-    {
-        gout.drawStar(pApollo11->starList[i].getPoint(), pApollo11->starList[i].getPhase());
-    }
+    pApollo11->starField.drawStars(gout);
 
-    // Collisions
-    // Check for successful landing
-    if (pApollo11->ground.onPlatform(pApollo11->LM.getPosition(), 20))
-    {
-        if (abs(pApollo11->LM.getAngle()) <= 0.3 && pApollo11->LM.getSpeed() <= 8.0)
-            pApollo11->LM.updateStatus(FlightStatus::landed);  
-        else 
-            pApollo11->LM.updateStatus(FlightStatus::crashed);   
-    }
-    else if (pApollo11->ground.hitGround(pApollo11->LM.getPosition(), 20))
-        pApollo11->LM.updateStatus(FlightStatus::crashed);
-
-    switch (pApollo11->LM.getStatus())
-    {
-        case FlightStatus::landed:
-            pApollo11->LM.setAngle(0.0);
-            gout.setPosition(Point(250.0, 380.0));
-            gout << "The Eagle has landed!";
-            break;
-        case FlightStatus::crashed:
-            pApollo11->LM.setAngle(3.14);
-            gout.setPosition(Point(250.0, 380.0));
-            gout << "Houston We Have A Problem";
-            break;
-    }
+    // Check for landing or crash collisions
+    pApollo11->LM.checkCollisions(pApollo11->ground, gout);
+    
 }
 
 /************************************************************************

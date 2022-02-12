@@ -145,6 +145,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="spacecraft.cpp" />
+    <ClCompile Include="starField.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="spacecraft.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="starField.h" />
     <ClInclude Include="uiDraw.h" />
     <ClInclude Include="uiInteract.h" />
   </ItemGroup>

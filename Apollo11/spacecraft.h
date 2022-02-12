@@ -15,6 +15,10 @@
 
 #include "Point.h"
 #include "physics.h"
+#include "ground.h"
+#include "uiDraw.h"
+#include "uiInteract.h"
+
 
 enum class FlightStatus { flying, landed, crashed }; // Outside the class so anyone can use it without referencing class
 
@@ -59,6 +63,13 @@ public:
 	void updateHorVelocity(bool mainThrust);
 	void updateFuel(bool mainThrust, bool leftThrust, bool rightThrust);
 	void updateStatus(FlightStatus stat);
+	void updateSpacecraft(const Interface* pUI, ogstream& gout);
+
+	void drawSpacecraft(ogstream & gout, Ground ground);
+
+	void checkCollisions(Ground& ground, ogstream& gout);
+
+	
 
 };
 

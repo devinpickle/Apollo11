@@ -9,7 +9,7 @@
  ********************************************************************/
 
 #include "Star.h"
-#include "uiDraw.h"
+
 
  /********************************************************************
  * Star - object with a randomnly generated starting phase
@@ -27,4 +27,9 @@ Star::Star(const Point& pt) :
 Star::Star()
 {
 
+}
+
+void Star::drawStar(ogstream & gout)
+{
+	gout.drawStar(this->getPoint(), this->getPhase());
 }
